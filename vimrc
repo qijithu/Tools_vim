@@ -5,6 +5,8 @@ set nocompatible              " required
 filetype on                  " required
 filetype plugin on
 
+" You should install the plugin of Vundle by the command first `git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim` 
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
