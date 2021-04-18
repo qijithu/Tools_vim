@@ -1,18 +1,16 @@
-" miracle_begin: this is head config
-set mouse=a
+" miracle_begin: this is a head config
+" set mouse=a
 set nocompatible              " required
-"filetype off                  " required
+" filetype off                  " required
 filetype on                  " required
 filetype plugin on
-
-" You should install the plugin of Vundle by the command first `git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim` 
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -30,7 +28,7 @@ set splitright
 " miracle_end
 
 " miracle_begin: this s set navifate split layout hot key
-"split navigations
+" split navigations
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
 nnoremap <C-L> <C-W><C-L>
@@ -81,6 +79,9 @@ au BufNewFile,BufRead *.cpp
     \ set fileformat=unix |
     \ set cindent |
     \ set history=50  " set command history to 50
+
+" Default file setteings
+set tabstop=4
 " miracle_end
 
 " miracle_begin: this is help for autoindent without always indent, for example when define multy-line function.
@@ -96,25 +97,32 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 set encoding=utf-8
 " miracle_end
 
+" Set vim font style
+set guifont=Monaco:h13
+
 " miracle_begin: this is set automatic completion
-" Bundle 'Valloric/YouCompleteMe'
-" let g:ycm_python_binary_path = 'python'
+Plugin 'Valloric/YouCompleteMe'
+" **If the Command above not work, using the mannual get function as 'git clone https://github.com/ycm-core/YouCompleteMe.git --depth=1', and move it into bundle directory.**
+
+" let g:ycm_python_binary_path = '/usr/local/bin/python3'
+let g:ycm_python_binary_path = '/Users/qiji/miniconda2/envs/python36/bin/python'
+let g:ycm_python_interpreter_path = '/Users/qiji/miniconda2/envs/python36/bin/python'
 
 " this is make sure your tooltip will not disappear and define go to definition hot-key
-" let g:ycm_autoclose_preview_window_after_completion=1
-" map <leader>q :YcmCompleter GoToDefinitionElseDeclaration<CR>
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>q :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " miracle_end
 
-" miracle_begin: this is python with virtualenv support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-" miracle_end
+"" miracle_begin: this is python with virtualenv support(vim9+)
+"py << EOF
+"import os
+"import sys
+"if 'VIRTUAL_ENV' in os.environ:
+"  project_base_dir = os.environ['VIRTUAL_ENV']
+"  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"  execfile(activate_this, dict(__file__=activate_this))
+"EOF
+"" miracle_end
 
 " miracle_begin: this is set grammar check and high-light
 Plugin 'scrooloose/syntastic'
@@ -197,7 +205,7 @@ let g:instant_markdown_slow = 1
 let g:instant_markdown_autostart = 0
 let g:instant_markdown_open_to_the_world = 1
 let g:instant_markdown_allow_external_content = 1
-map <F4> :InstantMarkdownPreview<CR>
+map <F12> :InstantMarkdownPreview<CR>
 " !!! For diplay mathematical formula !!! In my OSX, the vim-instant-preview is installed in
 " /usr/local/lib/node_modules/instant-markdown-d/ folder, only need to change index.html file
 " Add MathJax javascript library:
@@ -223,3 +231,11 @@ map <F4> :InstantMarkdownPreview<CR>
 command! Jsonf :execute '%!python -m json.tool'
   \ | :execute '%!python -c "import re,sys;sys.stdout.write(re.sub(r\".*?\\\u[0-9a-f]{4}.*\", lambda m:m.group().decode(\"unicode_escape\").encode(\"utf-8\"), sys.stdin.read()))"'
 
+" Set up Latex support
+Plugin 'vim-latex/vim-latex'
+let g:tex_flavor='latex'
+Plugin 'xuhdev/vim-latex-live-preview'
+autocmd Filetype tex setl updatetime=1
+" let g:livepreview_previewer = 'open -a Skim'
+let g:livepreview_previewer = 'open -a Preview'
+nmap <F10> :LLPStartPreview<cr>
